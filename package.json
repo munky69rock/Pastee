@@ -1,0 +1,15 @@
+{
+  "name": "Pastee",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt-bower-task": "~0.3.2",
+    "grunt": "~0.4.1"
+  }
+}

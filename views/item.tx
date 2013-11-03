@@ -1,0 +1,10 @@
+: # vim: ft=html :
+: cascade base
+: around content -> {
+<div>
+<pre class="prettyprint linenums:1">
+<: $entry.body :>
+</pre>
+<p><: $entry.created_at :> by <: $entry.nickname :></p>
+</div>
+: }

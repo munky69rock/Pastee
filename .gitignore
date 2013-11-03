@@ -1,0 +1,9 @@
+local/
+node_modules/
+bower_components/
+
+db/*
+
+public/lib/
+
+!.gitkeep

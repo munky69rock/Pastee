@@ -1,0 +1,24 @@
+: # vim: ft=html :
+: cascade base
+: around content -> {
+: for $entries -> $entry {
+<h2><a href="<: $c.req.uri_for('/'~$entry.id) :>"><: $c.req.uri_for('/'~$entry.id) :></a></h2>
+<pre class="prettyprint linenums:1">
+<: $entry.body :>
+</pre>
+<p><: $entry.created_at :> by <: $entry.nickname :></p>
+: }
+
+<ul class="pager">
+: if $page > 1 {
+<li class="previous"><a href="<: $c.req.uri_for('/history',[page => $page - 1 >= 1 ? $page - 1 : 1]) :>">Prev</a></li>
+: } else {
+<li class="previous disabled"><span>Prev</span></li>
+: }
+: if $has_next {
+<li class="next"><a href="<: $c.req.uri_for('/history',[page => $page+1]) :>">Next</a></li>
+: } else {
+<li class="next disabled"><span>Next</span></li>
+: }
+</ul>
+: }

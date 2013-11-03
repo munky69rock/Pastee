@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pastee</title>
+<link rel="shortcut icon" href="<: $c.req.uri_for('/favicon.ico') :>" type="image/vnd.microsoft.icon" />
+<link rel="stylesheet" href="<: $c.req.uri_for('/lib/bootstrap/css/bootstrap.min.css') :>">
+<style>
+body {
+  padding-top: 60px;
+}
+</style>
+: block head -> { }
+: block css  -> { }
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<: $c.req.uri_for('/') :>">Pastee</a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li class="<: if $c.req.path == '/' { :>active<: } :>"><a href="<: $c.req.uri_for('/') :>">Paste</a></li>
+        <li class="<: if $c.req.path == '/history' { :>active<: } :>"><a href="<: $c.req.uri_for('/history') :>">History</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+: block content -> { }
+
+</div> <!-- /container -->
+
+<script type="text/javascript" src="<: $c.req.uri_for('/lib/jquery/js/jquery.min.js') :>"></script>
+<script type="text/javascript" src="<: $c.req.uri_for('/lib/bootstrap/js/bootstrap.min.js') :>"></script>
+: block script -> { }
+</body>
+</html>
