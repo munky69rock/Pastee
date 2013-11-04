@@ -15,7 +15,8 @@
   "dependencies": {
     "jquery": "~2.0.3",
     "bootstrap": "~3.0.0",
-    "ace-builds": "~1.1.1"
+    "ace-builds": "~1.1.1",
+    "google-code-prettify": "~1.0.0"
   },
   "exportsOverride": {
     "jquery": {
@@ -26,6 +27,10 @@
       "js": "**/*.js",
       "css": "**/*.css",
       "fonts": "**/glyphicons-halflings-regular.*"
+    },
+    "google-code-prettify": {
+      "js": "src/*.js",
+      "css": "src/*.css"
     }
   }
 }

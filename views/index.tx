@@ -12,7 +12,7 @@
     <div class="clearfix">
       <label for="body">body</label>
       <div class="input">
-        <textarea id="body" class="form-control span9" name="body" rows="10" placeholder="fill your code"></textarea>
+        <textarea id="body" class="form-control" name="body" rows="10" placeholder="fill your code"></textarea>
       </div>
       <span class="help-block">fill your code</span>
     </div>
@@ -20,7 +20,7 @@
     <div class="clearfix">
       <label for="nickname">nickname</label>
       <div class="input">
-        <input id="nickname" class="xlarge" name="nickname" placeholder="nickname"/>
+        <input id="nickname" class="form-control" name="nickname" placeholder="nickname"/>
         <span class="help-block">your name</span>
       </div>
     </div>

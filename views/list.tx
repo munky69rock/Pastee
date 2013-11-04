@@ -1,5 +1,5 @@
 : # vim: ft=html :
-: cascade base
+: cascade base { prettify => 1 }
 : around content -> {
 : for $entries -> $entry {
 <h2><a href="<: $c.req.uri_for('/'~$entry.id) :>"><: $c.req.uri_for('/'~$entry.id) :></a></h2>

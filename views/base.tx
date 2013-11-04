@@ -13,6 +13,9 @@ body {
 </style>
 : block head -> { }
 : block css  -> { }
+: if $prettify {
+<link rel="stylesheet" href="<: $c.req.uri_for('/lib/google-code-prettify/css/prettify.css') :>">
+: }
 </head>
 <body>
 
@@ -44,5 +47,13 @@ body {
 <script type="text/javascript" src="<: $c.req.uri_for('/lib/jquery/js/jquery.min.js') :>"></script>
 <script type="text/javascript" src="<: $c.req.uri_for('/lib/bootstrap/js/bootstrap.min.js') :>"></script>
 : block script -> { }
+: if $prettify {
+<script src="<: $c.req.uri_for('/lib/google-code-prettify/js/prettify.js') :>"></script>
+<script>
+  $(function(){
+    prettyPrint();
+  });
+</script>
+: }
 </body>
 </html>
