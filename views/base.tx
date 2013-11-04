@@ -18,31 +18,41 @@ body {
 : }
 </head>
 <body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="<: $c.req.uri_for('/') :>">Pastee</a>
+      </div>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+        <ul class="nav navbar-nav">
+          <li class="<: if $c.req.path == '/' { :>active<: } :>"><a href="<: $c.req.uri_for('/') :>">Paste</a></li>
+          <li class="<: if $c.req.path == '/history' { :>active<: } :>"><a href="<: $c.req.uri_for('/history') :>">History</a></li>
+        </ul>
+
+        <form class="navbar-form navbar-right" role="search" action="<: $c.req.uri_for('/search') :>" method="get">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" name="q" value="<: $q :>">
+          </div>
+          <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        </form>
+
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
-    <div class="navbar-header">
-      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="<: $c.req.uri_for('/') :>">Pastee</a>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav navbar-nav">
-        <li class="<: if $c.req.path == '/' { :>active<: } :>"><a href="<: $c.req.uri_for('/') :>">Paste</a></li>
-        <li class="<: if $c.req.path == '/history' { :>active<: } :>"><a href="<: $c.req.uri_for('/history') :>">History</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<div class="container">
 
 : block content -> { }
 
-</div> <!-- /container -->
+  </div> <!-- /container -->
 
 <script type="text/javascript" src="<: $c.req.uri_for('/lib/jquery/js/jquery.min.js') :>"></script>
 <script type="text/javascript" src="<: $c.req.uri_for('/lib/bootstrap/js/bootstrap.min.js') :>"></script>

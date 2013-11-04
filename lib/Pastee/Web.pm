@@ -52,20 +52,33 @@ sub add_entry {
 	return $id;
 }
 
-sub entry_list {
+sub get_entry_list {
 	my $self = shift;
 	my %args = @_;
 	my $offset = 0;
 	my $ipp = $config->{max_items_on_list};
+
+	my @bind = ();
 	if (exists $args{offset}) {
 		$offset = $args{offset};
 	}
 	elsif (exists $args{page}) {
 		$offset = ($args{page} - 1) * $ipp;
 	}
+
+	my $where = '';
+	if (exists $args{search}) {
+		$where = " WHERE body LIKE ? ESCAPE ? ";
+		if ($args{search} =~ /[_%]/) {
+			$args{search} =~ s/([_%])/\\$1/g;
+		}
+		push @bind, "%$args{search}%", '\\';
+	}
+
+	push @bind, $offset;
 	my $rows = $self->dbh->select_all(
-		q{SELECT * FROM entry ORDER BY created_at DESC LIMIT ?,11},
-		$offset
+		qq{SELECT * FROM entry $where ORDER BY created_at DESC LIMIT ?,11},
+		@bind,
 	);
 	my $next;
 	$next = pop @$rows if @$rows > $ipp;
@@ -108,15 +121,6 @@ post '/create' => sub {
 	$c->render_json(+{ error => 0, location => $c->req->uri_for('/'.$id)->as_string });
 };
 
-get '/:id' => sub {
-	my ($self, $c) = @_;
-	my $id = $c->{args}{id};
-	$c->render('item.tx', +{
-		id => $id,
-		entry => $self->get_entry($id),
-	});
-};
-
 get '/history' => sub {
 	my ($self, $c) = @_;
 	my $result = $c->req->validator([
@@ -128,12 +132,42 @@ get '/history' => sub {
 		},
 	]);
 	$c->halt(403) if $result->has_error;
-	my ($entries, $has_next) = $self->entry_list( page => $result->valid('page') );
+	my ($entries, $has_next) = $self->get_entry_list( page => $result->valid('page') );
     $c->render('list.tx', {
 		page     => $result->valid('page'),
 		entries  => $entries,
 		has_next => $has_next,
 	});
 };
+
+get '/search' => sub {
+	my ($self, $c) = @_;
+	my $query = $c->req->parameters->{q};
+	my $result = $c->req->validator([
+		page => +{
+			default => 1,
+			rule => [
+				['UINT','invalid page value'],
+			],
+		},
+	]);
+	my $res = +{ q => $query };
+	if ($query) {
+		my ($entries, $has_next) = $self->get_entry_list( search => $query, page => $result->valid('page') );
+		$res->{entries}  = $entries;
+		$res->{has_next} = $has_next;
+	}
+	$c->render('list.tx', $res);
+};
+
+get '/{id:.{16}}' => sub {
+	my ($self, $c) = @_;
+	my $id = $c->{args}{id};
+	$c->render('item.tx', +{
+		id => $id,
+		entry => $self->get_entry($id),
+	});
+};
+
 
 1;
