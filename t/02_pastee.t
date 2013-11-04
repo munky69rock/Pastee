@@ -29,23 +29,33 @@ subtest 'add_entry & get_entry' => sub {
 	is $res2->{nickname}, 'anonymous';
 };
 
-subtest 'entry_list' => sub {
+subtest 'get_entry_list' => sub {
 	init_db();
 	# sort
 	for (1 .. 15) {
 		$app->add_entry("body$_", "nickname$_");
 	}
-	my ($list, $next) = $app->entry_list;
+	my ($list, $next) = $app->get_entry_list;
 
 	is $list->[0]->{body}, 'body15';
 	is scalar @$list, 10;
 	ok $next;
 	
 	# pagination
-	($list, $next) = $app->entry_list( page => 2 );
+	($list, $next) = $app->get_entry_list( page => 2 );
 	is $list->[0]->{body}, 'body5';
 	is scalar @$list, 5;
 	ok !$next;
+
+	# search
+	($list, $next) = $app->get_entry_list( search => '15' );
+	is $list->[0]->{body}, 'body15';
+	($list, $next) = $app->get_entry_list( search => 'hogehoge' );
+	ok !@$list;
+
+	# escape special character
+	($list, $next) = $app->get_entry_list( search => 'body_' );
+	ok !@$list;
 };
 
 done_testing;
