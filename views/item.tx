@@ -1,5 +1,5 @@
 : # vim: ft=html :
-: cascade base
+: cascade base { prettify => 1 }
 : around content -> {
 <div>
 <pre class="prettyprint linenums:1">
