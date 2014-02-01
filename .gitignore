@@ -4,6 +4,4 @@ bower_components/
 
 db/*
 
-public/lib/
-
 !.gitkeep
